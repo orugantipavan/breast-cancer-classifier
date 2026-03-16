@@ -12,11 +12,16 @@ Logistic Regression
 
 ## Steps
 1.Load dataset
+
 2.Train test split
+
 3.Feature scaling using StandardScaler
+
 4.Train Logistic Regression model 
+
 5.Evaluate using accuracy, classification report and confusion matrix 
 
 ## Technologies
 Python
+
 Scikit-learn
