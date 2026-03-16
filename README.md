@@ -1,16 +1,16 @@
 # Breast Cancer Classification
 (Machine Learning)
 
- This project buikds a machine learning model to classify tumors as malignant or benign using the Breast Cancer Wisconsin dataset.
+ This project builds a machine learning model to classify tumors as malignant or benign using the Breast Cancer Wisconsin dataset.
 
 ## Dataset
-Breast Cancer Wisconsin Dataset(from Scratch)
+Breast Cancer Wisconsin Dataset
+(from Scratch)
 
 ## Model Used
 Logistic Regression
 
 ## Steps
-
 1.Load dataset
 2.Train test split
 3.Feature scaling using StandardScaler
