@@ -48,3 +48,7 @@ print(confusion_matrix(y_test, y_pred))
 #8.Save model
 joblib.dump(model,"models/model.pkl")
 print("\n Model saved in models/model.pkl")
+
+#9.Save scaler
+joblib.dump(scaler,"models/scaler.pkl")
+print("Scaler saved in models/scaler.pkl")
