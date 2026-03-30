@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Breast Cancer Prediction</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            width: 60px;
+            margin: 3px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head> 
+<body>
+
+    <h1>Breast Cancer Prediction</h1>
+    
+    <p>Enter 30 feature values:</p>
+    
+    <div id="inputs"></div>
+    
+    <br>
+    <button onclick="predict()">Predict</button>
+    <h2 id="result"></h2>
+    <script>
+        const apiUrl = "https://breast-cancer-api-193x.onrender.com/predict";
+        // Create 30 input boxes
+        const container = document.getElementById("inputs");
+        for (let i = 0; i < 30; i++) 
+        {
+            const input = document.createElement("input");
+            input.type = "number";
+            input.step = "any";
+            input.placeholder = i + 1;
+
+            container.appendChild(input);
+        }
+        async function predict() {
+        const inputs = document.querySelectorAll("#inputs input");
+        let features = [];
+        inputs.forEach(input => {
+            features.push(parseFloat(input.value));
+        });
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ features })
+        });
+        const data = await response.json();
+        document.getElementById("result").innerText = "Prediction: " + data.result;
+    }
+    </script>
+
+</body>
+</html>
