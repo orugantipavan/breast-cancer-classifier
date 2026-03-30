@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import joblib
 import numpy as np
 
 #Initailize app
 app = Flask(__name__)
+CORS(app)
 
 #Load model and scaler
 model = joblib.load("models/model.pkl")
@@ -38,6 +40,6 @@ def predict():
     except Exception as e:
         return jsonify({"error": str(e)})
     
-    #Run server
+#Run server
 if __name__ == "__main__":
     app.run(debug=True)
