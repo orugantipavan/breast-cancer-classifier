@@ -5,7 +5,7 @@ import numpy as np
 
 #Initailize app
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 #Load model and scaler
 model = joblib.load("models/model.pkl")
