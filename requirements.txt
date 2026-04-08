@@ -1,5 +1,6 @@
-numpy
-Scikit-learn
-joblib
 flask
+flask-cors
+scikit-learn
+numpy
 gunicorn
+joblib
