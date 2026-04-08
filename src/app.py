@@ -5,8 +5,13 @@ import numpy as np
 
 #Initailize app
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
-
+CORS(app)
+@app.after_request
+def after_request(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+    response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+    return response
 #Load model and scaler
 model = joblib.load("models/model.pkl")
 scaler = joblib.load("models/scaler.pkl")
