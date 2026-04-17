@@ -5,75 +5,133 @@
     <style>
         body {
             font-family: Arial;
+            background: #0f172a;
+            color: white;
             text-align: center;
-            margin-top: 50px;
+            padding: 20px;
         }
+
+        h1 {
+            color: #38bdf8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
         input {
             width: 60px;
-            margin: 3px;
+            padding: 8px;
+            margin: 4px;
+            border-radius: 6px;
+            border: none;
+            text-align: center;
         }
+
         button {
-            padding: 10px 20px;
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #22c55e;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
             margin-top: 20px;
         }
     </style>
 </head>
+
 <body>
 
-    <h1>Breast Cancer Prediction</h1>
+    <h1>🧠 Breast Cancer Prediction</h1>
 
-    <p>Enter 30 feature values:</p>
+    <div class="container card">
 
-    <div id="inputs"></div>
+        <p>Enter 30 feature values:</p>
 
-    <br>
-    <button onclick="predict()">Predict</button>
+        <div id="inputs"></div>
 
-    <h2 id="result"></h2>
+        <button onclick="predict()">Predict</button>
 
-    <script>
-        const apiUrl = "https://breast-cancer-api-193x.onrender.com/predict";
+        <div class="loading" id="loading">⏳ Predicting...</div>
 
-        // Create 30 input boxes
-        const container = document.getElementById("inputs");
-        for (let i = 0; i < 30; i++) { 
-            const input = document.createElement("input");
-            input.type = "number";
-            input.step = "any";
-            input.placeholder = i + 1;
-            container.appendChild(input);
-        }
+        <div id="result"></div>
 
-        async function predict() {
-    const inputs = document.querySelectorAll("input");
-    let features = [];
+    </div>
 
-    inputs.forEach(input => {
-        features.push(parseFloat(input.value) || 0);
-    });
+<script>
+
+const inputDiv = document.getElementById("inputs");
+
+// Create 30 inputs
+for (let i = 0; i < 30; i++) {
+    const input = document.createElement("input");
+    input.placeholder = i+1;
+    inputDiv.appendChild(input);
+}
+
+async function predict() {
+
+    const inputs = document.querySelectorAll("#inputs input");
+    let values = [];
+
+    for (let input of inputs) {
+        values.push(parseFloat(input.value));
+    }
+
+    // Show loading
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("result").innerHTML = "";
 
     try {
-        const response = await fetch("https://breast-cancer-api-193x.onrender.com/predict", {
+        const response = await fetch("https://breast-cancer-classifier-4.onrender.com/predict", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ features: features })
+            body: JSON.stringify({ features: values })
         });
 
         const data = await response.json();
 
-        document.getElementById("result").innerText =
-            "Prediction: " + data.result;
+        document.getElementById("loading").style.display = "none";
+
+        let color = data.result === "Benign" ? "#22c55e" : "#ef4444";
+
+        document.getElementById("result").innerHTML =
+            `<span style="color:${color}">Prediction: ${data.result}</span>`;
 
     } catch (error) {
-        document.getElementById("result").innerText =
-            "Error: " + error;
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("result").innerHTML =
+            "<span style='color:red'>Error connecting to API</span>";
     }
 }
-            
-  
-    </script>
+
+</script>
 
 </body>
 </html>
