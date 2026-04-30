@@ -35,8 +35,10 @@ def predict(data: InputData):
     features = np.array(data.features).reshape(1, -1)
     features_scaled = scaler.transform(features)
 
-    prediction = model.predict(features_scaled)[0]
+    proba = model.predict_proba(features_scaled)[0]
 
-    result = "Benign" if prediction == 1 else "Malignant"
+    prediction = int(proba[1] > 0.5)
 
-    return {"prediction": int(prediction), "result": result}
+    confidence = float(proba[prediction])
+
+    return {"prediction": prediction, "result": "Benign" if prediction == 1 else "Malignant", "confidence": round(confidence * 100, 2)}
