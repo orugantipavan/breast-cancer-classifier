@@ -44,6 +44,7 @@ def predict(data: InputData):
     print("SCALED INPUT:", features_scaled)
     #Get probabilities
     proba = model.predict_proba(features_scaled)[0]
+    print("PROBABILIETIES:", proba)
     #Determine prediction
     prediction = int(proba[1] > 0.5)
     #Get confidence
