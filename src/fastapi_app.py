@@ -47,4 +47,4 @@ def predict(data: InputData):
     confidence = float(proba[prediction])
     #Step2: Clamp confidence (avoid 100%)
     confidence = min(confidence, 0.999)
-    return {"prediction": prediction, "result": "Benign" if prediction == 1 else "Malignant", "confidence": (round(confidence * 100, 2)}
+    return {"prediction": prediction, "result": "Benign" if prediction == 1 else "Malignant", "confidence": round(confidence * 100, 2)}
